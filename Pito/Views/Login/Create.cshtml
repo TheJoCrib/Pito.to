@@ -1,0 +1,27 @@
+﻿@model Pito.Models.Login;
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="logga">
+    <img class="logga" src="https://media.istockphoto.com/id/1321462048/photo/digital-transformation-concept-system-engineering-binary-code-programming.jpg?s=612x612&w=0&k=20&c=Ib8RLw3_eCOo9N3YE4pvp9rcb_WmirjS-9x9R-vTd68=" />
+</div>
+<div class="createContainer">
+
+    <h1>Lägg till en ny Användare</h1>
+    <form asp-action="Create">
+        <div>
+            Username: <input asp-for="Username" />
+        </div>
+        <div>
+            Password: <input asp-for="Password" />
+        </div>
+        <div>
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </form>
+
+</div>
+
+<a asp-action="Index" asp-controller="Login">Return</a>

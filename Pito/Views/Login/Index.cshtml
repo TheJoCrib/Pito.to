@@ -1,0 +1,30 @@
+﻿@model Pito.Models.Login
+@{
+    Layout = "_Layout";
+}
+<div class="redir">
+    <div>You're appearing in the Login Panel</div>
+    <form asp-action="Index" asp-route-returnurl="@ViewData["ReturnUrl"]">
+        <table>
+            <tr>
+                <td>Username</td>
+                <td>@Html.EditorFor(u => u.Username)</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>@Html.PasswordFor(p => p.Password)</td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Log In"/></td>
+            </tr>
+        </table>
+    </form>
+    <p>
+        @ViewBag.ErrorMessage
+    </p>
+
+    <a asp-action="Create">Register A New Account</a>
+
+    
+</div>
+
