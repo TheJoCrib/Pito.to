@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pito.Models;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace Pito.Controllers
@@ -16,6 +17,12 @@ namespace Pito.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Forgot()
+        {
+            return View();
+        }
+
         //För att skicka client-side data till en server(vår databas), du hämtar datan.
         [HttpGet]
         public IActionResult Create()
@@ -23,10 +30,18 @@ namespace Pito.Controllers
             return View();
         }
 
+
+
         //För att skicka client-side data till en server (vår databas), du skickar datan.
         [HttpPost]
         public IActionResult Create(Login loginModel)
         {
+            if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
+            {
+                ViewBag.ErrorMEssage = "Empty Registration";
+
+                return View();
+            }
             //När vi fyller i formuläret behöver vi någonstans att spara denna data och vi använder oss utav databasen vi skapat i MovieContext.
             using (LoginContext db = new LoginContext())
             {
@@ -36,9 +51,39 @@ namespace Pito.Controllers
             return RedirectToAction("Index");
         }
 
+        /*
+          
+        -: Prepare for password reset function later...
+
+        [HttpPost]
+        public IActionResult Create(Login loginModel)
+        {
+            if (string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
+            {
+                ViewBag.ErrorMEssage = "Empty Registration";
+                //Error 504 Innebär att det är fel
+                return View();
+            }
+            //När vi fyller i formuläret behöver vi någonstans att spara denna data och vi använder oss utav databasen vi skapat i MovieContext.
+            using (LoginContext db = new LoginContext())
+            {
+                db.Logged.Add(loginModel);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+         */
+
         [HttpPost]
         public async Task<IActionResult> Index(Login loginModel, string returnUrl = "")
         {
+            if (string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
+            {
+                ViewBag.ErrorMEssage = "Wrong Credentials";
+                //Error 504 Innebär att det är fel
+                ViewData["ReturnUrl"] = returnUrl;
+                return View();
+            }
             //Checkar Validate Method om vår databas har liknande som loginModel
             bool validUser = ValidateUser(loginModel);
 
@@ -59,7 +104,8 @@ namespace Pito.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "Inloggningen inte godkänd";
+
+                ViewBag.ErrorMessage = "Wrong Credentials";
                 ViewData["ReturnUrl"] = returnUrl;
                 return View();
             }
@@ -69,13 +115,16 @@ namespace Pito.Controllers
         {
             //Helt enkelt aktiverar databasen endast vid using, vi hämtar data från databasen som vi har skapat ovanför och jämfört det istället med information från databasen istället för "hårdkodad" sträng, 
             //Lättaste sättet att göra en inloggning under.
+
             using (var db = new LoginContext())
             {
-                var existCheck = db.Logged.Any(user =>
-                user.Username == loginModel.Username.ToUpper() && user.Password == loginModel.Password);
+
+                var existCheck1 = db.Logged.Any(user => (user.Username == loginModel.Username.ToUpper()) || (user.Email == loginModel.Username) && user.Password == loginModel.Password);
 
 
-                return existCheck;
+
+                return existCheck1;
+
             }
 
         }

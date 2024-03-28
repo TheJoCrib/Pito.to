@@ -1,22 +1,88 @@
-html {
-  font-size: 14px;
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #222222;
+    font-family: 'Arial', sans-serif;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.login-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.login-modal {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 40vh;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    margin-bottom: 20px;
 }
 
-body {
-  margin-bottom: 60px;
+h2 {
+    margin: 0;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    background-color: #555;
+    border: none;
+    color: #fff;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.link {
+    color: #59a6ff;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+    .link:hover {
+        color: dimgray;
+    }
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff9600;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #ff3860;
+    text-align: center;
+}
+
+.labelHover {
+    color: gray;
 }
