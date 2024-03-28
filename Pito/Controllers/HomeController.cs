@@ -14,6 +14,18 @@ namespace Pito.Controllers
         {
             _logger = logger;
         }
+        public IActionResult Error(int statusCode)
+        {
+            if (statusCode == 404)
+            {
+                // You can pass additional data to the view if you want
+                return View("Error");
+            }
+            // Handle other status codes if necessary
+
+            return View("Error");
+        }
+
         public IActionResult Index()
         {
             return View();

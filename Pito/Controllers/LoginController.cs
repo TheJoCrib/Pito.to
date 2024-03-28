@@ -77,6 +77,14 @@ namespace Pito.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Login loginModel, string returnUrl = "")
         {
+            var recaptcha = Request.Form["g-recaptcha-response"];
+            if (!await ValidateRecaptcha(recaptcha))
+            {
+                ViewBag.ErrorMessage = "Captcha validation failed";
+                ViewData["ReturnUrl"] = returnUrl;
+                return View();
+            }
+
             if (string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
             {
                 ViewBag.ErrorMEssage = "Wrong Credentials";
@@ -111,6 +119,14 @@ namespace Pito.Controllers
             }
         }
 
+        private async Task<bool> ValidateRecaptcha(string recaptchaResponse)
+        {
+            var client = new HttpClient();
+            var response = await client.PostAsync($"https://www.google.com/recaptcha/api/siteverify?secret=6Lcb7KcpAAAAADpMwdhwhUzbgpEdvHp6lDbQ82FB&response={recaptchaResponse}", new StringContent(""));
+            var jsonString = await response.Content.ReadAsStringAsync();
+            dynamic jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
+            return jsonData.success;
+        }
         private bool ValidateUser(Login loginModel)
         {
             //Helt enkelt aktiverar databasen endast vid using, vi hämtar data från databasen som vi har skapat ovanför och jämfört det istället med information från databasen istället för "hårdkodad" sträng, 

@@ -22,17 +22,23 @@
                 Anonymous: @Html.CheckBoxFor(user => user.Anonymous)
             </div>
             
-            <div class="links">
-                <a asp-action="Create" class="link">Register!</a>
-                <a asp-action="Forgot" class="link">I've Forgot My Password</a>
-            </div>
             
-            <div class="form-group">
-                <input type="submit" value="SIGN IN" class="submit-button btn btn-success " />
-            </div>
+            <div class="g-recaptcha" data-sitekey="6Lcb7KcpAAAAAOQeedjzceEEp9Jue01tBx9yt92H"></div>
             <p class="error-message">
                 @ViewBag.ErrorMessage
             </p>
+            @section Scripts {
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            }
+
+            <div class="links">
+                <a asp-action="Create" class="link">Register</a>
+                <a asp-action="Forgot" class="link">Reset Password</a>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="SIGN IN" class="submit-button btn btn-success " />
+            </div>
         </form>
     </div>
 </div>
