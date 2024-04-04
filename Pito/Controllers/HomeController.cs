@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Pito.Models;
 using System.Diagnostics;
 
@@ -13,6 +14,14 @@ namespace Pito.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        public class IndexModel : PageModel
+        {
+            public void OnGet()
+            {
+                ViewData["ActivePage"] = "Home";
+            }
         }
         public IActionResult Error(int statusCode)
         {
@@ -28,6 +37,7 @@ namespace Pito.Controllers
 
         public IActionResult Index()
         {
+            ViewData["ActiveTab"] = "Home";
             return View();
         }
 

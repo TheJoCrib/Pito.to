@@ -3,6 +3,7 @@ body, html {
     margin: 0;
     background-color: #222222;
     font-family: 'Arial', sans-serif;
+    overflow: hidden;
 }
 
 .login-overlay {
@@ -11,6 +12,7 @@ body, html {
     align-items: center;
     height: 100vh;
 }
+
 
 .login-modal {
     background-color: #333;
@@ -56,6 +58,24 @@ h2 {
     justify-content: space-between;
     margin-bottom: 10px;
 }
+
+.navContainer {
+    background-color: #333;
+}
+
+.navLayout {
+    margin-left: 100px;
+}
+
+.navItem {
+    background-color: #fff;
+}
+
+.navbar-brand.active {
+    background-color: #222222; /* Or any color that signifies active state */
+    color: #fff; /* Or any other properties you want to change for active state */
+}
+
 
 .link {
     color: #59a6ff;
