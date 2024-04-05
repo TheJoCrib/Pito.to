@@ -12,20 +12,16 @@
     <nav class="navContainer navbar">
         <div class="navLayout container-fluid">
             <div class="d-flex justify-content-start">
-                <a class="navbar-brand text-white @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Home"><i class="bi bi-chat-fill"></i> Home</a>
-                <a class="navbar-brand text-white @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Home"><i class="bi bi-chat-fill"></i> Search</a>
-                <a class="navbar-brand text-white @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Home"><i class="bi bi-chat-fill"></i> Post</a>
+                <a class="navbar-brand @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Home"><i class="bi bi-chat-fill"></i> Home</a>
+                <a class="navbar-brand @IsActive("/Search")" title="Search for any Post" asp-action="Index" asp-controller="Search"><i class="bi bi-search"></i> Search</a>
+                <a class="navbar-brand @IsActive("/Credit")" title="Go to Credit" asp-action="Index" asp-controller="Credit"><i class="bi bi-chat-fill"></i> Credits</a>
             </div>
-            <div class="justify-content-end">
-                <a class="navbar-brand text-white @IsActive("/Logout")" title="Logout" asp-action="Index" asp-controller="Home">Logout</a>
+            <div class="d-flex justify-content-end">
+                <a class="navbar-brand @IsActive("/Profile")" title="Logout" asp-action="Index" asp-controller="Profile"></a>
             </div>
-            
-            
         </div>
-        
     </nav>
 
-    
     <div class="font-monospace">
         @RenderBody()
         @RenderSection("Scripts", required: false)
@@ -39,6 +35,5 @@
             }
         }
     </script>
-
 </body>
 </html>

@@ -72,15 +72,23 @@ h2 {
     background-color: #fff;
 }
 
-.navbar-brand.active {
-    background-color: #222222; /* Or any color that signifies active state */
-    color: #fff; /* Or any other properties you want to change for active state */
-    border-radius: 5px;
-    border-block-end-style: groove;
+.navbar-brand {
+    color: #fff;
 }
 
+    .navbar-brand.active {
+        background-color: #222222; /* Or any color that signifies active state */
+        /* Or any other properties you want to change for active state */
+        border-radius: 5px;
+        border-block-end-style: groove;
+    }
+
+    .navbar-brand:is(:hover) {
+        color: gray;
+    }
+
 .navbar-brand {
-    font-size: 17px;
+    font-size: 15px;
     width: 100px;
     height: 40px;
     text-align: center;

@@ -88,7 +88,6 @@ namespace Pito.Controllers
             if (string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
             {
                 ViewBag.ErrorMEssage = "Wrong Credentials";
-                //Error 504 Innebär att det är fel
                 ViewData["ReturnUrl"] = returnUrl;
                 return View();
             }
@@ -145,6 +144,7 @@ namespace Pito.Controllers
 
         }
 
+        //Not being used at the moment, will soon though ;)
         public async Task<IActionResult> SignOutUser()
         {
             await HttpContext.SignOutAsync(
