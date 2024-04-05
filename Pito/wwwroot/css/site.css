@@ -65,6 +65,7 @@ h2 {
 
 .navLayout {
     margin-left: 100px;
+    max-height: 30px;
 }
 
 .navItem {
@@ -74,6 +75,15 @@ h2 {
 .navbar-brand.active {
     background-color: #222222; /* Or any color that signifies active state */
     color: #fff; /* Or any other properties you want to change for active state */
+    border-radius: 5px;
+    border-block-end-style: groove;
+}
+
+.navbar-brand {
+    font-size: 17px;
+    width: 100px;
+    height: 40px;
+    text-align: center;
 }
 
 
