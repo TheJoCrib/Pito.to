@@ -78,8 +78,7 @@ h2 {
 }
 
     .navbar-brand.active {
-        background-color: #222222; /* Or any color that signifies active state */
-        /* Or any other properties you want to change for active state */
+        background-color: #222222;
         border-radius: 5px;
         border-block-end-style: groove;
     }
@@ -94,6 +93,7 @@ h2 {
     height: 40px;
     text-align: center;
 }
+
 
 
 .link {

@@ -148,13 +148,16 @@ namespace Pito.Controllers
 
             using (var db = new LoginContext())
             {
-
-                var existCheck1 = db.Logged.Any(user => (user.Username == loginModel.Username.ToUpper()) || (user.Email == loginModel.Username) && user.Password == loginModel.Password);
+                // Ensure you're checking both the username and email in separate clauses
+                var existCheck1 = db.Logged.Any(user =>
+                    ((user.Username.ToUpper() == loginModel.Username.ToUpper()) || (user.Email.ToUpper() == loginModel.Username.ToUpper()))
+                    && user.Password == loginModel.Password);
 
                 return existCheck1;
-
-
             }
+
+
+
 
         }
 
@@ -170,3 +173,4 @@ namespace Pito.Controllers
 
     }
 }
+
