@@ -74,6 +74,7 @@ h2 {
 
 .navbar-brand {
     color: #fff;
+    font-weight: bold;
 }
 
     .navbar-brand.active {

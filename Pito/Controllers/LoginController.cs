@@ -31,7 +31,6 @@ namespace Pito.Controllers
         }
 
 
-
         //För att skicka client-side data till en server (vår databas), du skickar datan.
         [HttpPost]
         public IActionResult Create(Login loginModel)
@@ -42,11 +41,25 @@ namespace Pito.Controllers
 
                 return View();
             }
+
+
             //När vi fyller i formuläret behöver vi någonstans att spara denna data och vi använder oss utav databasen vi skapat i MovieContext.
             using (LoginContext db = new LoginContext())
             {
-                db.Logged.Add(loginModel);
-                db.SaveChanges();
+                var alreadyCreated = db.Logged.Any(user => (user.Username == loginModel.Username.ToUpper()) || (user.Email == loginModel.Email));
+
+                if (alreadyCreated == true)
+                {
+                    ViewBag.ErrorMEssage = "A User Already Exist";
+                    return alreadyCreated ? View() : View();
+
+                }
+                else
+                {
+                    db.Logged.Add(loginModel);
+                    db.SaveChanges();
+                }
+
             }
             return RedirectToAction("Index");
         }
@@ -93,11 +106,13 @@ namespace Pito.Controllers
             }
             //Checkar Validate Method om vår databas har liknande som loginModel
             bool validUser = ValidateUser(loginModel);
-
             if (validUser == true)
             {
+
                 var user = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 user.AddClaim(new Claim(ClaimTypes.Name, loginModel.Username));
+
+                Debug.WriteLine(loginModel.Username);
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(user));
@@ -136,9 +151,8 @@ namespace Pito.Controllers
 
                 var existCheck1 = db.Logged.Any(user => (user.Username == loginModel.Username.ToUpper()) || (user.Email == loginModel.Username) && user.Password == loginModel.Password);
 
-
-
                 return existCheck1;
+
 
             }
 
