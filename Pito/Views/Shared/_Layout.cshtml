@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    
+
     <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 </head>
 <body>
@@ -23,15 +23,26 @@
             <div class="d-flex justify-content">
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                 {
-                    <a class="navbar-brand dropdown-toggle @IsActive("/Profile")" title="View Profile" asp-action="Index" asp-controller="Profile">
-                        <text>
-                            @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
-                        </text>
-                    </a>
+                    <div class="btn-group">
+                        <button class="btn navbar-brand dropdown-toggle @IsActive("/Profile")" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="View Profile">
+                            <text>
+                                @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
+                            </text>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <div class="">
+                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                    </div>
+                    </ul>
+                </div>
                 }
                 else
                 {
-                    <a class="navbar-brand @IsActive("/")" title="Login" asp-action="Index" asp-controller="Login">
+                <a class="navbar-brand @IsActive("/")" title="Login" asp-action="Index" asp-controller="Login">
                         @if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                         {
                             <text>
@@ -42,8 +53,8 @@
                         {
                             @:Login
                         }
-                    </a>
-                    <a class="navbar-brand @IsActive("/Login/Create")" title="Register" asp-action="Create" asp-controller="Login">
+                </a>
+                <a class="navbar-brand @IsActive("/Login/Create")" title="Register" asp-action="Create" asp-controller="Login">
                         @if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                         {
                             <text>
@@ -54,11 +65,11 @@
                         {
                             @:Signup
                         }
-                    </a>
+                </a>
 
                 }
-                
-            </div>
+
+        </div>
 
         </div>
     </nav>
@@ -67,7 +78,7 @@
         @RenderBody()
         @RenderSection("Scripts", required: false)
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         @functions {
             public string IsActive(string path)

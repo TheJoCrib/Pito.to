@@ -32,6 +32,9 @@ h2 {
     margin: 0;
 }
 
+
+
+
 .close-button {
     background: none;
     border: none;
@@ -95,6 +98,18 @@ h2 {
 }
 
 
+
+.dropdown-menu {
+    background-color: #3333;
+    border-color: gray;
+    width: 350px;
+    height: 20vh;
+}
+
+.dropdown-item {
+    color: #fff;
+    background-color: #333;
+}
 
 .link {
     color: #59a6ff;
