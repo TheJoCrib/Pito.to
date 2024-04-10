@@ -12,6 +12,6 @@ public class LoginContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=FURKAN\\SQLEXPRESS;Database=PitoDB;User Id=KarasuDB;Password=Karasu198408;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+        optionsBuilder.UseSqlServer("Server=Furkan;Database=PitoDB;User Id=KarasuDB;Password=Karasu112;TrustServerCertificate=True;MultipleActiveResultSets=True;");
     }
 }

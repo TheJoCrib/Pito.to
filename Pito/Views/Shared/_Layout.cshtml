@@ -23,22 +23,34 @@
             <div class="d-flex justify-content">
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                 {
-                    <div class="btn-group">
+                    <div class="btn-group" style="width: auto; height:auto">
                         <button class="btn navbar-brand dropdown-toggle @IsActive("/Profile")" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="View Profile">
                             <text>
                                 @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
                             </text>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <div class="">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                        <ul class="dropdown-menu dropdown-menu-lg-end p-2" style="width: auto; height:auto;">
+                            <li class="itemContainer">
+                                <div class="items d-flex">
+                                    <div class="p-2 flex-fill"><a class="items" href="#">My Profile</a></div>
+                                    <div class="p-2 flex-fill"><a class="items" href="#">My Post</a></div>
+                                </div>
+                            </li>
+                            <li class="itemContainer">
+                                <div class="items d-flex">
+                                    <div class="p-2 flex-fill"><a class="items" href="#">Messenger</a></div>
+                                    <div class="p-2 flex-fill"><a class="items" href="#">Control Panel</a></div>
+                                </div>
+                            </li>
+                            <li class="itemContainer">
+                                <div class="items d-flex">
+                                    <div class="p-2 flex-fill"><a class="items" href="#">Settings</a></div>
+                                    <div class="p-2 flex-fill"><a class="items" href="#">Sign Out</a></div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    </ul>
-                </div>
+
                 }
                 else
                 {
