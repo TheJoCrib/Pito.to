@@ -24,25 +24,26 @@
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                 {
                     <div class="btn-group">
-                        <button class="btn navbar-brand dropdown-toggle @IsActive("/Profile")" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="View Profile">
+                        <button class="btn navbar-brand dropdown-toggle @IsActive("/Profile")" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="My Profile">
                             <text>
                                 @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
                             </text>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
                             <div class="">
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
-                            <li><a class="dropdown-item" href="#">Menu item</a></li>
+                                <li><a class="dropdown-item" href="#">My Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Messenger</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">My Content</a></li>
+                                <li><a class="dropdown-item" href="#">Control Panel</a></li>
+                                <li><a class="dropdown-item" href="#">Sign Out</a></li>
+                            </div>
+                        </ul>
                     </div>
-                    </ul>
-                </div>
                 }
                 else
                 {
-                <a class="navbar-brand @IsActive("/")" title="Login" asp-action="Index" asp-controller="Login">
+                    <a class="navbar-brand @IsActive("/")" title="Login" asp-action="Index" asp-controller="Login">
                         @if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                         {
                             <text>
@@ -53,8 +54,8 @@
                         {
                             @:Login
                         }
-                </a>
-                <a class="navbar-brand @IsActive("/Login/Create")" title="Register" asp-action="Create" asp-controller="Login">
+                    </a>
+                    <a class="navbar-brand @IsActive("/Login/Create")" title="Register" asp-action="Create" asp-controller="Login">
                         @if (!User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                         {
                             <text>
@@ -65,10 +66,8 @@
                         {
                             @:Signup
                         }
-                </a>
-
+                    </a>
                 }
-
         </div>
 
         </div>

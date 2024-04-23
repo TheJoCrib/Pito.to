@@ -18,7 +18,7 @@ body, html {
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
-    width: 40vh;
+    width: 42.5vh;
 }
 
 .modal-header {
@@ -28,6 +28,9 @@ body, html {
     margin-bottom: 20px;
 }
 
+.g-recaptcha{
+  
+}
 h2 {
     margin: 0;
 }
@@ -98,17 +101,18 @@ h2 {
 }
 
 
-
 .dropdown-menu {
     background-color: #3333;
     border-color: gray;
     width: 350px;
-    height: 20vh;
+    height: 200px;
 }
 
 .dropdown-item {
     color: #fff;
     background-color: #333;
+    border-radius: 5px;
+    font-size: 15px;
 }
 
 .link {
@@ -130,6 +134,16 @@ h2 {
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
+}
+
+ul {
+    column-count: 2;
+    column-gap: 1px;
+}
+
+
+li {
+    padding: 2px;
 }
 
 .error-message {
