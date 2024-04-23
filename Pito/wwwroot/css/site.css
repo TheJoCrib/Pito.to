@@ -108,7 +108,12 @@ h2 {
     height: 200px;
 }
 
-.dropdown-item {
+.profileTab{
+    background-color: red;
+    padding: 20px;
+}
+
+.dropdown-item { 
     color: #fff;
     background-color: #333;
     border-radius: 5px;
