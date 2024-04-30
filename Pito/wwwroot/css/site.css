@@ -102,10 +102,13 @@ h2 {
 
 
 .dropdown-menu {
+
     padding: 0;
     background-color: #3333;
     border-color: gray;
-    width: 350px;
+    width: 400px;
+    height: 220px;
+    
 }
 
 .profileTab{
@@ -113,22 +116,24 @@ h2 {
     padding: 20px;
 }
 
-.dropdown-item { 
-    display:flex;
-    align-items:center;
+.dropdown-item {
+    display: flex;
+    align-items: center;
     color: #fff;
     background-color: #333;
     border-radius: 5px;
     font-size: 15px;
-
+    align-self: flex-end;
 }
 
-    .dropdown-item i {
-        width: 120px; /* Adjust width as necessary */
-        text-align: center;
-        margin-right: 10px; /* Adjust spacing between icon and text as necessary */
-        color: purple;
-    }
+
+.dropdown-item i {
+    width: 120px; /* Adjust width as necessary */
+    text-align: center;
+    margin-right: 10px; /* Adjust spacing between icon and text as necessary */
+    color: purple;
+}
+
 
 
 .link {
@@ -140,6 +145,7 @@ h2 {
     .link:hover {
         color: dimgray;
     }
+
 
 
 .submit-button {
