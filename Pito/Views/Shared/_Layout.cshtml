@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/img/Pito.png" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -20,25 +21,28 @@
                 <a class="navbar-brand @IsActive("/Credit")" title="Go to Credit" asp-action="Index" asp-controller="Credit"><i class="fa fa-coins"></i> Credits</a>
             </div>
 
+
+
+
             <div class="d-flex justify-content">
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                 {
-                        <div class="btn-group">
-                            <button class="btn navbar-brand dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="My Profile">
-                                <text>
-                                    @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
-                                </text>
-                            </button>
+                    <div class="btn-group">
+                        <button class="btn navbar-brand dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="My Profile">
+                            <text>
+                                @(User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower())
+                            </text>
+                        </button>
 
-                            <ul class="dropdown-menu dropdown-menu-lg-end">
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
-                            </ul>        
-                        </div>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Profile</span><span class="icon-bg"><i class="fa fa-user"></i></span></a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">Messenger</span><span class="icon-bg"><i class="fa-solid fa-inbox"></i></span></a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">Settings</span><span class="icon-bg"><i class="fa-solid fa-gear"></i></span></a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">My Content</span><span class="icon-bg"><i class="fa-solid fa-comments"></i></span></a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">Control Panel</span><span class="icon-bg"><i class="fa-solid fa-wrench"></i></span></a></li>
+                            <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile"><span class="item-text">Sign Out</span><span class="icon-bg"><i class="fa-solid fa-right-from-bracket"></i></span></a></li>
+                        </ul>
+                    </div>
                 }
                 else
                 {
@@ -67,10 +71,23 @@
                         }
                     </a>
                 }
-        </div>
+            </div>
 
         </div>
     </nav>
+
+    <div class="profileHeader">
+        <img src="~/css/img/Pito2.png" alt="Profile Icon" class="profileIcon">
+    </div>
+    <div class="positionAbove">
+        <div class="secondary-nav1">
+                <label></label>
+    
+        </div>
+        <div class="secondary-nav">
+        </div>
+    </div>
+
 
     <div class="font-monospace">
         @RenderBody()

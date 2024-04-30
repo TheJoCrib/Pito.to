@@ -1,24 +1,45 @@
 body, html {
     height: 100%;
     margin: 0;
-    background-color: #222222;
+    background-color: #161618;
     font-family: 'Arial', sans-serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
+
 
 .login-overlay {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    position: fixed; /* Ensures the overlay covers the whole screen */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 10; /* Ensures it's above other content */
 }
-
 
 .login-modal {
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
     width: 42.5vh;
+    opacity: 0; /* Start fully transparent */
+    animation: fadeInModal 0.5s ease-out forwards; /* Animation to fade in */
+    z-index: 20; /* Above the overlay */
+}
+
+@keyframes fadeInModal {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px); /* Starts a bit above its final position */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Ends at its final position */
+    }
 }
 
 .modal-header {
@@ -27,6 +48,7 @@ body, html {
     color: #fff;
     margin-bottom: 20px;
 }
+
 
 .g-recaptcha {
 }
@@ -65,8 +87,10 @@ h2 {
     margin-bottom: 10px;
 }
 
+
+
 .navContainer {
-    background-color: #333;
+    background-color: #242424;
 }
 
 .navLayout {
@@ -100,13 +124,80 @@ h2 {
     text-align: center;
 }
 
+.profileHeader {
+    background-color: #030303; /* Adjust the background color as needed */
+    padding: 0px;
+    text-align: center; /* Center the profile icon if desired */
+    width: 100%; /* or some percentage relative to its container */
+    height: auto; /* maintain aspect ratio */
+    max-width: auto;
+    min-width: 1920px; /* minimum size to prevent it becoming too small */
+}
+
+
+.secondary-nav {
+    position: relative;
+    height: 20px; /* Adjust height as needed */
+    background: transparent;
+}
+
+    .secondary-nav::before,
+    .secondary-nav::after {
+        content: '';
+        position: absolute;
+        bottom: 20px; /* Align with the bottom of the div */
+        height: 3px; /* Height of the line */
+        background-color: #0f5579; /* Color of the line */
+    }
+
+    .secondary-nav::before {
+        left: 0;
+        width: 150px; /* Fixed width, unaffected by zoom */
+    }
+
+    .secondary-nav::after {
+        right: 0;
+        width: 150px; /* Fixed width, unaffected by zoom */
+    }
+
+
+.positionAbove {
+    position: absolute;
+    top: 370px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Ensure this is above profileHeader */
+}
+
+
+.secondary-nav1 {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top: 3px solid #0f5579;
+    border-left: 3px solid #0f5579;
+    border-right: 3px solid #0f5579;
+    margin-left: 150px;
+    margin-right: 150px;
+    background-color: #161618;
+}
+
+
+.profileIcon {
+    width: 630px; /* Adjust size as needed */
+    height: 350px; /* Adjust size as needed */
+    border-radius: 100%; /* Circular icon */
+    display: inline-block; /* Necessary for centering if using text-align on parent */
+    background-size: cover; /* Cover the entire area of the div */
+    background-position: center; /* Center the background image */
+}
 
 .dropdown-menu {
     padding: 0;
     background-color: #3333;
     border-color: gray;
     width: 400px;
-    height: 220px;
+    height: 120px;
 }
 
 .profileTab {
@@ -117,23 +208,26 @@ h2 {
 .dropdown-item {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Adjusts alignment */
     color: #fff;
     background-color: #333;
     border-radius: 5px;
     font-size: 15px;
-    align-self: flex-end;
+    font-weight: 600;
+    padding: 5px 10px; /* Ensures padding is consistent */
 }
-
 
     .dropdown-item i {
-        width: 120px; /* Adjust width as necessary */
-        text-align: center;
-        margin-right: 10px; /* Adjust spacing between icon and text as necessary */
-        color: purple;
+        color: gray; /* Icon color */
+        padding: 5px; /* Add padding around the icon */
+        margin-right: 10px; /* Space between the icon and text */
+        background-color: #222222; /* Background color of the box */
+        border-radius: 3px; /* Rounded corners for the box */
     }
 
-.moveDown {
-}
+    .dropdown-item:active {
+        background-color: dimgray;
+    }
 
 
 .link {
@@ -145,6 +239,7 @@ h2 {
     .link:hover {
         color: dimgray;
     }
+
 
 
 .submit-button {
@@ -175,4 +270,15 @@ li {
 
 .labelHover {
     color: gray;
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    .profileIcon {
+        width: 80px;
+        height: 80px;
+    }
 }

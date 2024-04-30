@@ -6,6 +6,7 @@
 
 <div class="login-overlay">
     <div class="login-modal">
+        
         <div class="modal-header">
             <h2>Sign In</h2>
         </div>
@@ -41,5 +42,12 @@
                 <input type="submit" value="SIGN IN" class="submit-button btn btn-success " />
             </div>
         </form>
+
+        <script>
+            function closeModal() {
+                var overlay = document.querySelector('.login-overlay');
+                overlay.style.display = 'none';
+            }
+        </script>
     </div>
 </div>
