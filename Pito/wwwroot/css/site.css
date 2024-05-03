@@ -131,6 +131,9 @@ h2 {
     width: 100%; /* or some percentage relative to its container */
     height: auto; /* maintain aspect ratio */
     max-width: auto;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 
@@ -277,17 +280,18 @@ li {
     justify-content: center;
     align-items: center;
 }
+
 .layerMain {
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     max-height: auto;
-    min-height: 755px;
+    min-height: 1205px;
     min-width: 1215px;
     max-width: auto;
     background-color: #333;
-    position:absolute;
-    margin-top: 750px;
+    position: absolute;
+    margin-top: 1200px;
     border-radius: 10px;
 }
 
@@ -295,11 +299,29 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 700px;
+    min-height: 1170px;
     max-height: auto;
-    min-width: 1160px;
+    min-width: 1180px;
     max-width: auto;
     background-color: gray;
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: #4449;
+}
+
+/* BELOW IS THE MODEL / INDEX / ETC DESIGN*/
+.PostIndex {
+    background-color: #333;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+@media only screen and (max-width: 1920px) {
+    .layerMain {
+        min-width: 1590px;
+    }
+
+    .layerSecond {
+        min-width: 1550px;
+    }
 }

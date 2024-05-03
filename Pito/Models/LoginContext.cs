@@ -5,13 +5,10 @@ public class LoginContext : DbContext
 {
     public DbSet<Login> Logged { get; set; }
 
-    public LoginContext()
+    // Adjusted to accept DbContextOptions
+    public LoginContext(DbContextOptions<LoginContext> options) : base(options)
     {
-        Database.EnsureCreated();
+        Database.EnsureCreated();  // Note: Consider using Migrations instead of EnsureCreated for production environments
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=Furkan\\SQLEXPRESS;Database=PitoDB;User Id=KarasuDB;Password=Karasu198408;TrustServerCertificate=True;MultipleActiveResultSets=True;");
-    }
 }

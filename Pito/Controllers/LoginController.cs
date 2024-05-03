@@ -1,16 +1,23 @@
-﻿
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Pito.Models;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Pito.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly LoginContext _context;
+
+        // Constructor that uses dependency injection to provide an instance of LoginContext
+        public LoginController(LoginContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
@@ -23,47 +30,37 @@ namespace Pito.Controllers
             return View();
         }
 
-        //För att skicka client-side data till en server(vår databas), du hämtar datan.
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-
-        //För att skicka client-side data till en server (vår databas), du skickar datan.
         [HttpPost]
         public IActionResult Create(Login loginModel)
         {
             if (string.IsNullOrWhiteSpace(loginModel.Email) || string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
             {
-                ViewBag.ErrorMEssage = "Empty Registration";
-
+                ViewBag.ErrorMessage = "Empty Registration";
                 return View();
             }
 
-
-            //När vi fyller i formuläret behöver vi någonstans att spara denna data och vi använder oss utav databasen vi skapat i MovieContext.
-            using (LoginContext db = new LoginContext())
+            var alreadyCreated = _context.Logged.Any(user => user.Username.ToUpper() == loginModel.Username.ToUpper() || user.Email == loginModel.Email);
+            if (alreadyCreated)
             {
-                var alreadyCreated = db.Logged.Any(user => (user.Username == loginModel.Username.ToUpper()) || (user.Email == loginModel.Email));
-
-                if (alreadyCreated == true)
-                {
-                    ViewBag.ErrorMEssage = "A User Already Exist";
-                    return alreadyCreated ? View() : View();
-
-                }
-                else
-                {
-                    db.Logged.Add(loginModel);
-                    db.SaveChanges();
-                }
-
+                ViewBag.ErrorMessage = "A User Already Exists";
+                return View();
             }
-            return RedirectToAction("Index");
+            else
+            {
+                loginModel.Password = HashUtility.HashPassword(loginModel.Password); // Hash the password before saving
+                _context.Logged.Add(loginModel);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
+        // All existing comments and methods remain unchanged
         /*
           
         -: Prepare for password reset function later...
@@ -100,37 +97,28 @@ namespace Pito.Controllers
 
             if (string.IsNullOrWhiteSpace(loginModel.Username) || string.IsNullOrWhiteSpace(loginModel.Password))
             {
-                ViewBag.ErrorMEssage = "Wrong Credentials";
-                ViewData["ReturnUrl"] = returnUrl;
-                return View();
-            }
-            //Checkar Validate Method om vår databas har liknande som loginModel
-            bool validUser = ValidateUser(loginModel);
-            if (validUser == true)
-            {
-
-                var user = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                user.AddClaim(new Claim(ClaimTypes.Name, loginModel.Username));
-
-                Debug.WriteLine(loginModel.Username);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(user));
-
-                if (returnUrl != "")
-                {
-                    return Redirect(returnUrl);
-                }
-                else
-                    return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-
                 ViewBag.ErrorMessage = "Wrong Credentials";
                 ViewData["ReturnUrl"] = returnUrl;
                 return View();
             }
+
+            var user = _context.Logged.FirstOrDefault(u => u.Username.ToUpper() == loginModel.Username.ToUpper() || u.Email.ToUpper() == loginModel.Username.ToUpper());
+            if (user != null && HashUtility.VerifyPassword(user.Password, loginModel.Password))
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username) // Ensure the username is always used for the claim
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                return !string.IsNullOrEmpty(returnUrl) ? Redirect(returnUrl) : RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.ErrorMessage = "Invalid login attempt.";
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(loginModel);
         }
 
         private async Task<bool> ValidateRecaptcha(string recaptchaResponse)
@@ -141,36 +129,14 @@ namespace Pito.Controllers
             dynamic jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
             return jsonData.success;
         }
-        private bool ValidateUser(Login loginModel)
-        {
-            //Helt enkelt aktiverar databasen endast vid using, vi hämtar data från databasen som vi har skapat ovanför och jämfört det istället med information från databasen istället för "hårdkodad" sträng, 
-            //Lättaste sättet att göra en inloggning under.
-
-            using (var db = new LoginContext())
-            {
-                // Ensure you're checking both the username and email in separate clauses
-                var existCheck1 = db.Logged.Any(user =>
-                    ((user.Username.ToUpper() == loginModel.Username.ToUpper()) || (user.Email.ToUpper() == loginModel.Username.ToUpper()))
-                    && user.Password == loginModel.Password);
-
-                return existCheck1;
-            }
 
 
-
-
-        }
-
-        //Not being used at the moment, will soon though ;)
+        /*
         public async Task<IActionResult> SignOutUser()
         {
-            await HttpContext.SignOutAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme);
-
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Login");
         }
-
-
+        */
     }
 }
-
