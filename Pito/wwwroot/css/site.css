@@ -185,6 +185,7 @@ h2 {
 .profileIcon {
     width: 630px; /* Adjust size as needed */
     height: 350px; /* Adjust size as needed */
+    max-height: auto;
     border-radius: 100%; /* Circular icon */
     display: inline-block; /* Necessary for centering if using text-align on parent */
     background-size: cover; /* Cover the entire area of the div */
@@ -269,4 +270,36 @@ li {
 
 .labelHover {
     color: gray;
+}
+
+.layerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.layerMain {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    max-height: auto;
+    min-height: 755px;
+    min-width: 1215px;
+    max-width: auto;
+    background-color: #333;
+    position:absolute;
+    margin-top: 750px;
+    border-radius: 10px;
+}
+
+.layerSecond {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 700px;
+    max-height: auto;
+    min-width: 1160px;
+    max-width: auto;
+    background-color: gray;
+    border-radius: 10px;
+    background-color: #4449;
 }
