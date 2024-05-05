@@ -16,7 +16,7 @@
     <nav class="navContainer navbar">
         <div class="navLayout container-fluid">
             <div class="d-flex justify-content-start">
-                <a class="navbar-brand @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Post"><i class="bi bi-chat-fill"></i> Home</a>
+                <a class="navbar-brand @IsActive("/Home")" title="Go To Home" asp-action="Index" asp-controller="Home"><i class="bi bi-chat-fill"></i> Home</a>
                 <a class="navbar-brand @IsActive("/Search")" title="Search for any Post" asp-action="Index" asp-controller="Search"><i class="fa fa-search "></i> Search</a>
                 <a class="navbar-brand @IsActive("/Credit")" title="Go to Credit" asp-action="Index" asp-controller="Credit"><i class="fa fa-coins"></i> Credits</a>
             </div>
@@ -27,6 +27,11 @@
             <div class="d-flex justify-content">
                 @if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(User.Identity.Name))
                 {
+                        <a class="btn navbar-brand" asp-action="Create" asp-controller="Post">
+                            <text>
+                                Create
+                            </text>
+                        </a>
                     <div class="btn-group">
                         <button class="btn navbar-brand dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="My Profile">
                             <text>
