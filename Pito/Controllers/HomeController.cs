@@ -10,19 +10,14 @@ namespace Pito.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly LoginContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, LoginContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public class IndexModel : PageModel
-        {
-            public void OnGet()
-            {
-                ViewData["ActivePage"] = "Home";
-            }
-        }
         public IActionResult Error(int statusCode)
         {
             if (statusCode == 404)

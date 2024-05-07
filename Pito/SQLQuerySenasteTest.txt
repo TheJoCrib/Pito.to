@@ -1,7 +1,7 @@
 USE [PitoDB]
 GO
 
-/****** Object:  Table [dbo].[Logged]    Script Date: 06/04/2024 15:46:17 ******/
+/****** Object:  Table [dbo].[Logged]    Script Date: 06/02/2024 15:46:17 ******/
 SET ANSI_NULLS ON
 GO
 
