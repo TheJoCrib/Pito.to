@@ -16,10 +16,11 @@ public class HashUtility
             password: password,
             salt: salt,
             prf: KeyDerivationPrf.HMACSHA256,
+            //changing iteration count bugs out sometimes unsure if its a .net 7 issue_
             iterationCount: 10000,
             numBytesRequested: 256 / 8));
 
-        return $"{Convert.ToBase64String(salt)}.{hashed}"; // Store this in the database
+        return $"{Convert.ToBase64String(salt)}.{hashed}";
     }
 
     public static bool VerifyPassword(string hashedPasswordWithSalt, string password)

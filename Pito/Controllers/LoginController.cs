@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Pito.Controllers
 {
@@ -59,6 +60,81 @@ namespace Pito.Controllers
                 return RedirectToAction("Index");
             }
         }
+        [Authorize]
+        public IActionResult Edit()
+        {
+            string currentUsername = User.Identity.Name;
+            var user = _context.Logged.FirstOrDefault(u => u.Username == currentUsername);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            return View(user);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Login model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = _context.Logged.FirstOrDefault(u => u.Id == model.Id);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Check if the email or username is being updated to a new value that already exists in the database
+            if (_context.Logged.Any(u => u.Id != model.Id && (u.Email.ToUpper() == model.Email.ToUpper() || u.Username.ToUpper() == model.Username.ToUpper())))
+            {
+                ModelState.AddModelError(string.Empty, "Account with the same username or email already exists.");
+                return View(model);
+            }
+
+            bool usernameChanged = user.Username != model.Username;
+            bool passwordChanged = !HashUtility.VerifyPassword(model.Password, user.Password);
+
+            user.Email = model.Email;
+            user.Username = model.Username;
+            user.Password = HashUtility.HashPassword(model.Password);  // Always hash the new password
+
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+
+            // If the username or password has been changed, sign the user out.
+            if (usernameChanged || passwordChanged)
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return RedirectToAction("Index", "Login", new { message = "Please sign in again with your new username or password." });
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete()
+        {
+            string currentUsername = User.Identity.Name;
+            var user = _context.Logged.FirstOrDefault(u => u.Username == currentUsername);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            _context.Logged.Remove(user);
+            await _context.SaveChangesAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Login");
+        }
+
+
+
 
         // All existing comments and methods remain unchanged
         /*
@@ -130,13 +206,10 @@ namespace Pito.Controllers
             return jsonData.success;
         }
 
-
-        /*
         public async Task<IActionResult> SignOutUser()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Login");
         }
-        */
     }
 }

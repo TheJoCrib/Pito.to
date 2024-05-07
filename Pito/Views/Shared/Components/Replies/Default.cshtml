@@ -1,0 +1,28 @@
+﻿@model List<ReplyModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="common-container">
+        @foreach (var reply in Model.OrderBy(r => !r.isPinned))
+        {
+            <div class="common-section">
+                <div class="icons">
+                    <span>
+                        @if (reply.isPinned)
+                        {
+                            <i class="fa-solid fa-thumbtack"></i>
+                        }
+                    </span>
+                    <span class="relative-time" data-date="@reply.Date"></span>
+                </div>
+                <p style="white-space:pre-wrap">@reply.Text</p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="common-section">
+        <p><i class="fa-solid fa-xmark"></i> No replies available for this thread.</p>
+    </div>
+}

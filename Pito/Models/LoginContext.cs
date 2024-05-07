@@ -3,12 +3,14 @@ using Pito.Models;
 
 public class LoginContext : DbContext
 {
-    public DbSet<Login> Logged { get; set; }
+    public LoginContext(DbContextOptions<LoginContext> options) : base(options) { }
 
-    // Adjusted to accept DbContextOptions
-    public LoginContext(DbContextOptions<LoginContext> options) : base(options)
-    {
-        Database.EnsureCreated();  // Note: Consider using Migrations instead of EnsureCreated for production environments
-    }
+    public DbSet<Login> Logged { get; set; }
+    public DbSet<TopicModel> Topics { get; set; }
+    public DbSet<ThreadModel> Threads { get; set; }
+    public DbSet<ReplyModel> Replies { get; set; }
+
+
+
 
 }

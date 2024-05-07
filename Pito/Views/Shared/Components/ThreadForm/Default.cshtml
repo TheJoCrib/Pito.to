@@ -1,0 +1,51 @@
+﻿@model ThreadModel
+
+<div class="common-container">
+    <div class="section-header">
+        <div class="title-description text-center">
+            <h1>New Thread</h1>
+        </div>
+        <a class="btn toggle-thread-form" data-thread-form="thread-form-@ViewBag.TopicId">
+            <i class="fa-regular fa-plus"></i>
+            New Thread
+        </a>
+    </div>
+
+    <div class="thread-form" style="display: none;" id="thread-form-@ViewBag.TopicId">
+        <div class="form-container">
+            <form asp-action="Index" method="post">
+            <div class="form-group">
+                <label asp-for="Title">Title</label>
+                <span asp-validation-for="Title" class="text-danger"></span>
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Text">Message</label>
+                <span asp-validation-for="Text" class="text-danger"></span>
+                <textarea asp-for="Text" class="form-control auto-resize"></textarea>
+            </div>
+            <input type="hidden" asp-for="TopicId" value="@ViewBag.TopicId" />
+            <button type="submit" class="btn"><i class="fa-regular fa-share-from-square"></i>Submit Thread</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Initialize auto-resizing for all textareas with the 'auto-resize' class
+        $('.auto-resize').on('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight + this.offsetHeight - this.clientHeight) + 'px';
+        });
+
+        // Update textarea heights on window resize
+        $(window).on('resize', function () {
+            $('.auto-resize').each(function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight + this.offsetHeight - this.clientHeight) + 'px';
+            });
+        });
+    });
+</script>

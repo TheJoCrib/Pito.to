@@ -1,0 +1,42 @@
+﻿@model ReplyModel
+
+<div class="common-container">
+    <div class="section-header">
+        <h4>Replies</h4>
+        <a class="btn toggle-reply-form" data-reply-form="reply-form-@ViewBag.ThreadId">
+            <i class="fa-solid fa-reply"></i>
+            Reply
+        </a>
+    </div>
+
+    <div class="reply-form" style="display: none;" id="reply-form-@ViewBag.ThreadId">
+        <div class="form-container">
+            <form asp-action="Index" method="post">
+            <div class="form-group">
+                <label asp-for="Text"></label>
+                <span asp-validation-for="Text" class="text-danger"></span>
+                <textarea asp-for="Text" class="form-control auto-resize"></textarea>
+            </div>
+            <input type="hidden" asp-for="ThreadId" value="@ViewBag.ThreadId" />
+            <button type="submit" class="btn"><i class="fa-regular fa-share-from-square"></i>Submit Reply</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.auto-resize').on('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight + this.offsetHeight - this.clientHeight) + 'px';
+        });
+
+        $(window).on('resize', function () {
+            $('.auto-resize').each(function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight + this.offsetHeight - this.clientHeight) + 'px';
+            });
+        });
+    });
+</script>
