@@ -11,5 +11,8 @@ namespace Pito.Models
         public int QuotedReplyId { get; set; }
         public DateTime? Date { get; set; }
         public bool isPinned { get; set; } = false;
+
+        public string? AuthorName { get; set; } // assuming the username is stored in User.Identity.Name
+
     }
 }

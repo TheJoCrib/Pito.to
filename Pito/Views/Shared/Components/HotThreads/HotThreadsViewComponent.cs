@@ -52,7 +52,7 @@ public class HotThreadsViewComponent : ViewComponent
             else
             {
                 // Log missing TopicId or handle the case where it's missing
-                ViewData[$"ThreadTopic_{thread.Thread.TopicId}"] = "Unknown Author"; // Example fallback
+                ViewData[$"ThreadTopic_{thread.Thread.TopicId}"] = "Unknown Author";
             }
             ViewData[$"ThreadScore_{thread.Thread.Id}"] = thread.TrendingScore.ToString("F1");
         }

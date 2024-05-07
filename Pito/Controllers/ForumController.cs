@@ -9,7 +9,7 @@ namespace Pito.Controllers
     {
         private readonly LoginContext _context;
 
-        // Constructor that uses dependency injection to provide an instance of LoginContext
+        // Bra dependancy injection, bättre än Ensurecreated() i db context. Mkt bättre med add-migrations å update-db.
         public ForumController(LoginContext context)
         {
             _context = context;
@@ -34,6 +34,7 @@ namespace Pito.Controllers
         {
             if (ModelState.IsValid)
             {
+                thread.AuthorName = User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower();
                 thread.Date = DateTime.Now;
                 _context.Threads.Add(thread);
                 _context.SaveChanges();

@@ -47,6 +47,7 @@ namespace Pito.Controllers
         {
             if (ModelState.IsValid)
             {
+                reply.AuthorName = User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower(); // Capture the current user's username
                 reply.Date = DateTime.Now;
                 _context.Replies.Add(reply);
                 _context.SaveChanges();
@@ -72,5 +73,58 @@ namespace Pito.Controllers
                 _context.SaveChanges();
             }
         }
+
+
+        public IActionResult MyThreads()
+        {
+            var currentUser = User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower();
+            var threads = _context.Threads.Where(t => t.AuthorName == currentUser).ToList();
+            return View(threads);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var thread = _context.Threads.FirstOrDefault(t => t.Id == id && t.AuthorName == User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower());
+            if (thread == null)
+            {
+                return NotFound();
+            }
+            return View(thread);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, ThreadModel updatedThread)
+        {
+            var thread = _context.Threads.FirstOrDefault(t => t.Id == id && t.AuthorName == User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower());
+            if (thread == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                thread.Title = updatedThread.Title;
+                thread.Text = updatedThread.Text;
+                _context.SaveChanges();
+                return RedirectToAction("MyThreads");
+            }
+            return View(updatedThread);
+
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var thread = _context.Threads.FirstOrDefault(t => t.Id == id && t.AuthorName == User.Identity.Name.Substring(0, 1).ToUpper() + User.Identity.Name.Substring(1).ToLower());
+            if (thread != null)
+            {
+                _context.Threads.Remove(thread);
+                _context.SaveChanges();
+                return RedirectToAction("MyThreads");
+            }
+            return NotFound();
+        }
+
+
     }
 }

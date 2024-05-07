@@ -54,7 +54,7 @@ namespace Pito.Controllers
             }
             else
             {
-                loginModel.Password = HashUtility.HashPassword(loginModel.Password); // Hash the password before saving
+                loginModel.Password = HashUtility.HashPassword(loginModel.Password);
                 _context.Logged.Add(loginModel);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -100,12 +100,12 @@ namespace Pito.Controllers
 
             user.Email = model.Email;
             user.Username = model.Username;
-            user.Password = HashUtility.HashPassword(model.Password);  // Always hash the new password
+            user.Password = HashUtility.HashPassword(model.Password);  // Hashha alltid lösen
 
             _context.Update(user);
             await _context.SaveChangesAsync();
 
-            // If the username or password has been changed, sign the user out.
+            //Fixat nu
             if (usernameChanged || passwordChanged)
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -134,9 +134,6 @@ namespace Pito.Controllers
         }
 
 
-
-
-        // All existing comments and methods remain unchanged
         /*
           
         -: Prepare for password reset function later...
@@ -150,7 +147,7 @@ namespace Pito.Controllers
                 //Error 504 Innebär att det är fel
                 return View();
             }
-            //När vi fyller i formuläret behöver vi någonstans att spara denna data och vi använder oss utav databasen vi skapat i MovieContext.
+
             using (LoginContext db = new LoginContext())
             {
                 db.Logged.Add(loginModel);
@@ -183,7 +180,7 @@ namespace Pito.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Username) // Ensure the username is always used for the claim
+                    new Claim(ClaimTypes.Name, user.Username)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -200,7 +197,7 @@ namespace Pito.Controllers
         private async Task<bool> ValidateRecaptcha(string recaptchaResponse)
         {
             var client = new HttpClient();
-            var response = await client.PostAsync($"https://www.google.com/recaptcha/api/siteverify?secret=6Lcb7KcpAAAAADpMwdhwhUzbgpEdvHp6lDbQ82FB&response={recaptchaResponse}", new StringContent(""));
+            var response = await client.PostAsync($"https://www.google.com/recaptcha/api/siteverify?secret=6LcZItUpAAAAAIYNF3zGsJBmBx7CNMYoaKBxla98&response={recaptchaResponse}", new StringContent(""));
             var jsonString = await response.Content.ReadAsStringAsync();
             dynamic jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString);
             return jsonData.success;

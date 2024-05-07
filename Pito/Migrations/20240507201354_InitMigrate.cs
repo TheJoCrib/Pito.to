@@ -37,7 +37,8 @@ namespace Pito.Migrations
                     ThreadId = table.Column<int>(type: "int", nullable: false),
                     QuotedReplyId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    isPinned = table.Column<bool>(type: "bit", nullable: false)
+                    isPinned = table.Column<bool>(type: "bit", nullable: false),
+                    AuthorName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,6 +56,7 @@ namespace Pito.Migrations
                     TopicId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     isPinned = table.Column<bool>(type: "bit", nullable: false),
+                    AuthorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ViewCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

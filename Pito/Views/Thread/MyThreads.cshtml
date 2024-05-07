@@ -1,0 +1,41 @@
+﻿@model List<ThreadModel>
+@{
+    Layout = "_Layout";
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="PostIndex">
+        <div class="common-container">
+            @foreach (var thread in Model)
+            {
+                <a class="common-section" href="@Url.Action("Index", "Thread", new {threadId = thread.Id})">
+                    <div class="icons">
+                        <span>
+                            @if (thread.isPinned)
+                            {
+                                <i class="fa-solid fa-thumbtack"></i>
+                            }
+                        </span>
+                        <span style="color: yellow"><i class="fa-solid fa-user"></i> @thread.AuthorName</span>
+                        <span class="relative-time" data-date="@thread.Date"></span>
+                        <span><i class="fa-regular fa-eye" style="color: deepskyblue"></i>@thread.ViewCount</span>
+
+                    </div>
+
+                    <h2>@thread.Title</h2>
+
+                    <div class="paragraph-container">@thread.Text</div>
+                </a>
+                <a href="@Url.Action("Edit", "Thread", new { id = thread.Id })" class="common-btn" style="color:cornflowerblue">Edit</a>
+                <a href="@Url.Action("Delete", "Thread", new { id = thread.Id })" class="common-btn" style="color: red" onclick="return confirm('Are you sure you want to delete this thread?');">Delete</a>
+            }
+        </div>  
+    </div>
+}
+else
+{
+    <div class="common-section">
+        <p>No hot/trending threads are available.</p>
+    </div>
+}
